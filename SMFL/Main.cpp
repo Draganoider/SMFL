@@ -4,14 +4,24 @@
 
 int main()
 {
+
+    int resolutionx = 1500;
+    int resolutiony = 1500;
     // create the window
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "My window");
+    sf::RenderWindow window(sf::VideoMode(resolutionx, resolutiony), "My window");
     
     sf::CircleShape shape (50.f);
     shape.setFillColor(sf::Color(150, 50, 250));
+    int trueresolutionx = resolutionx - 100;
 
+    int trueresolutiony = resolutiony - 100;
     int i = 0;
-    
+    int curentx = 0;
+    int curenty = 0;
+    int newx = 0;
+    int newy = 0;
+    int dx = 10;
+    int dy = 3;
 
 
     // run the program as long as the window is open
@@ -28,30 +38,40 @@ int main()
 
         // clear the window with black color
         window.clear(sf::Color::Cyan);
-        if (i <= 34)
+       
+        
+        window.draw(shape);
+        //shape.setPosition(243.f, 368.f);
+        Sleep(2);
+        newx = curentx + dx;
+        curentx = newx;
+        newy = curenty + dy;
+        curenty = newy;
+        if (newx >= trueresolutionx)
         {
-
-
-            
-
-            window.draw(shape);
-            Sleep(10);
-            sf::Vector2f position = shape.getPosition();
-            if (i <= 17)
-            {
-                shape.move(50.f, 50.f);
-            }
-            if (i >= 17)
-            {
-                shape.move(-50.f, -50.f);
-            }
-
-            i++;
-            if (i >= 34)
-            {
-                i = i - 33;
-            }
+            dx = -dx;
         }
+      
+        if (newy >= trueresolutiony)
+        {
+            dy = -dy;
+        }
+        if (newx <= 0)
+        {
+            dx = -dx;
+        }
+
+        if (newy <= 0)
+        {
+            dy = -dy;
+        }
+
+        shape.setPosition(newx, newy);
+
+
+
+
+
         
         //shape.move(50.f, 50.f);
         // draw everything here...
