@@ -2,6 +2,9 @@
 #include <iostream>
 #include <cstdlib>
 #include "windows.h"
+#include <math.h> 
+#include <cmath>
+
 
 int trueRandom(int max)
 {
@@ -10,7 +13,7 @@ int trueRandom(int max)
 
 int main()
 {
-    const int N = 20;
+    const int N = 10;
     const int D = 50;
 
 
@@ -34,6 +37,7 @@ int main()
     int newy[N];
     int dx[N];
     int dy[N];
+    int Mvector[N];
 
     for (int i = 0; i < N; i++)
     {
@@ -51,6 +55,7 @@ int main()
         initX[i] = trueRandom(resolutionx - D*2) + D;
         initY[i] = trueRandom(resolutiony - D*2) + D;
 
+        Mvector[i] = 0;
 
     }
 
@@ -98,15 +103,9 @@ int main()
 
         for (int i = 0; i < N; i++) {
 
-            window.draw(shape[i]);
-
-           
-
-           
-
 
             //shape.setPosition(243.f, 368.f);
-            //Sleep(2);
+            Sleep(2);
 
             newx[i] = curentx[i] + dx[i];
             curentx[i] = newx[i];
@@ -133,7 +132,35 @@ int main()
                 dy[i] = -dy[i];
             }
 
+
             shape[i].setPosition(newx[i], newy[i]);
+
+
+            window.draw(shape[i]);
+
+
+            for (int k = 0; k < N; k++) {
+                for (int j = k + 1; j < N; j++) {
+
+                    if (k == j) continue;
+
+                    double val = sqrt(pow((curentx[j] - curentx[k]), 2) + pow((curenty[j] - curenty[k]), 2));
+
+                    if (val <= D * 2 + 10)
+                    {
+                        dx[k] = -dx[k];
+                        dy[k] = -dy[k];
+
+                        dx[j] = -dx[j];
+                        dy[j] = -dy[j];
+                    }
+
+                }
+            }
+
+           
+
+
         }
 
 
